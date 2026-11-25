@@ -63,16 +63,23 @@ def adapt(uploaded, pasted):
     except json.JSONDecodeError:
         return json.loads(raw[raw.index("{"): raw.rindex("}") + 1])
 
-
-def speak_button(text, key):
-    """Leitura em voz alta pelo próprio navegador (Web Speech API)."""
+def speak_button(text, key, theme_name):
+    """Leitura em voz alta pelo próprio navegador, com as cores do tema escolhido."""
+    bg, fg, surface, accent = THEMES[theme_name]
     components.html(
         f"""
-        <div style="font-family:sans-serif">
-          <button id="p" style="padding:10px 16px;font-size:16px">▶ Ouvir</button>
-          <button id="s" style="padding:10px 16px;font-size:16px">■ Parar</button>
-          <label style="margin-left:12px">Velocidade
-            <select id="r" style="font-size:16px"><option value="0.8">Lenta</option>
+        <style>
+          body {{ margin:0; font-family:sans-serif; color:{fg}; background:transparent; }}
+          button, select {{ font-size:16px; padding:10px 16px; color:{fg}; background:{surface};
+            border:1px solid {accent}; border-radius:8px; cursor:pointer; }}
+          option {{ color:{fg}; background:{surface}; }}
+          label {{ margin-left:12px; color:{fg}; }}
+        </style>
+        <div>
+          <button id="p">▶ Ouvir</button>
+          <button id="s">■ Parar</button>
+          <label>Velocidade
+            <select id="r"><option value="0.8">Lenta</option>
             <option value="1" selected>Normal</option><option value="1.3">Rápida</option></select></label>
         </div>
         <script>
@@ -148,14 +155,14 @@ with col_out:
             text = r.get("audio_description", "")
             if teacher:
                 text = st.text_area("Editar", text, height=250, key="ed_audio")
-            speak_button(text, "audio")
+            speak_button(text, "audio", contrast)
             render_block(text)
 
         with t_dys:
             text = r.get("dyslexia_text", "")
             if teacher:
                 text = st.text_area("Editar", text, height=250, key="ed_dys")
-            speak_button(text, "dys")
+            speak_button(text, "dys", contrast)
             render_block(text)
 
         with t_adhd:
