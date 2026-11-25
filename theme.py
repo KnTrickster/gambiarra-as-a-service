@@ -39,4 +39,12 @@ def build_css(font, size, line_height, letter_spacing, theme_name):
 [data-testid="stSidebar"] h2, [data-testid="stSidebar"] label,
 [data-testid="stSidebar"] p, [data-testid="stSidebar"] span {{ color:{fg} !important; }}
 [data-testid="stHeader"] {{ background:{bg} !important; border-bottom:1px solid {accent}; }}
+[data-testid="stTextArea"] textarea {{ background:{surface} !important; color:{fg} !important;
+  caret-color:{fg}; border:1px solid {accent} !important; }}
+[data-testid="stTextArea"] textarea::placeholder {{ color:{fg}; opacity:0.6; }}
+[data-testid="stTextArea"] label p {{ color:{fg} !important; }}
+[data-baseweb="select"] > div {{ background:{surface} !important; border:1px solid {accent} !important; }}
+[data-baseweb="select"] * {{ color:{fg} !important; }}
+[data-baseweb="popover"] ul {{ background:{surface} !important; }}
+[data-baseweb="popover"] li, [data-baseweb="popover"] li * {{ color:{fg} !important; }}
 </style>"""
